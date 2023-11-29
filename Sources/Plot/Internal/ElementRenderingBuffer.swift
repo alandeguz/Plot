@@ -14,13 +14,13 @@ internal final class ElementRenderingBuffer {
     private var body = ""
     private var attributes = [AnyAttribute]()
     private var attributeIndexes = [String : Int]()
-    private var padSelfClosing = false
+    private var selfClosingTrailingSlash = true
 
     init(element: AnyElement, indentation: Indentation?) {
         self.element = element
         self.indentation = indentation
-        if let pad = ProcessInfo.processInfo.environment["PAD_SELF_CLOSING"] {
-            self.padSelfClosing = pad == "YES"
+        if let pad = ProcessInfo.processInfo.environment["SELF_CLOSING_TRAILING_SLASH"] {
+            self.selfClosingTrailingSlash = pad == "YES"
         }
     }
 
@@ -78,8 +78,8 @@ internal final class ElementRenderingBuffer {
             return string + "</\(element.name)>"
         case .neverClosed:
             return openingTag + openingTagSuffix + body
-        case .selfClosing:
-            return openingTag + (self.padSelfClosing ? " " : "") + "/" + openingTagSuffix
+        case .`selfClosing`:
+            return openingTag + (self.selfClosingTrailingSlash ? "/" : "") + openingTagSuffix
         }
     }
 }
