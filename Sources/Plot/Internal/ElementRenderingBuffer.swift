@@ -4,6 +4,8 @@
 *  MIT license, see LICENSE file for details
 */
 
+import Foundation
+
 internal final class ElementRenderingBuffer {
     var containsChildElements = false
 
@@ -12,10 +14,14 @@ internal final class ElementRenderingBuffer {
     private var body = ""
     private var attributes = [AnyAttribute]()
     private var attributeIndexes = [String : Int]()
+    private var padSelfClosing = false
 
     init(element: AnyElement, indentation: Indentation?) {
         self.element = element
         self.indentation = indentation
+        if let pad = ProcessInfo.processInfo.environment["PAD_SELF_CLOSING"] {
+            self.padSelfClosing = pad == "YES"
+        }
     }
 
     func add(_ attribute: AnyAttribute) {
@@ -73,7 +79,7 @@ internal final class ElementRenderingBuffer {
         case .neverClosed:
             return openingTag + openingTagSuffix + body
         case .selfClosing:
-            return openingTag + "/" + openingTagSuffix
+            return openingTag + (self.padSelfClosing ? " " : "") + "/" + openingTagSuffix
         }
     }
 }
