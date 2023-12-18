@@ -44,7 +44,16 @@ public extension Node where Context == SiteMap.URLContext {
     /// Define the URL's location.
     /// - parameter url: The canonical location URL.
     static func loc(_ url: URLRepresentable) -> Node {
-        .element(named: "loc", text: url.string)
+        .element(named: "loc", text: Self.addSlash(url.string))
+    }
+    
+    // adds a trailing slash to a Path if it's a directory (not a *.*)
+    private static func addSlash(_ string: String) -> String {
+        let testString = string.components(separatedBy: "/").last ?? string
+        if testString.components(separatedBy: ".").count == 1 {
+            return string + "/"
+        }
+        return string
     }
 
     /// Define the frequency at which the URL's content is expected to change.
