@@ -31,9 +31,9 @@ public extension Node where Context == HTML.HeadContext {
         let url = url.string
 
         return .group([
-            .link(.rel(.canonical), .href(url)),
-            .meta(.name("twitter:url"), .content(url)),
-            .meta(.property("og:url"), .content(url))
+            .link(.rel(.canonical), .href(url.addSlash())),
+            .meta(.name("twitter:url"), .content(url.addSlash())),
+            .meta(.property("og:url"), .content(url.addSlash()))
         ])
     }
 
@@ -70,8 +70,8 @@ public extension Node where Context == HTML.HeadContext {
         let url = url.string
 
         return .group([
-            .meta(.name("twitter:image"), .content(url)),
-            .meta(.property("og:image"), .content(url))
+            .meta(.name("twitter:image"), .content(url.addSlash())),
+            .meta(.property("og:image"), .content(url.addSlash()))
         ])
     }
 
