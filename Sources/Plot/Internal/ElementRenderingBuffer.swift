@@ -72,8 +72,8 @@ internal final class ElementRenderingBuffer {
             return string + "</\(element.name)>"
         case .neverClosed:
             return openingTag + openingTagSuffix + body
-        case .selfClosing:
-            return openingTag + "/" + openingTagSuffix
+        case .`selfClosing`:
+            return openingTag + openingTagSuffix
         }
     }
 }
