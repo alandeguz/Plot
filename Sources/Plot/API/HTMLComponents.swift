@@ -100,7 +100,12 @@ public extension Node where Context == HTML.HeadContext {
     static func twitterUsername(_ username: String) -> Node {
         .meta(.name("twitter:site"), .content(username))
     }
-
+    
+    //// Declare the theme color of the site
+    ///- parameter color: the color string as HTML color, hence #RGB, #RRGGBB, rgb(), hsl() or a named color
+    static func themeColor(_ color: String) -> Node {
+        .meta(.name("theme-color"), .content(color))
+    }
 
     /// Declare how the page should behave in terms of viewport responsiveness.
     /// This declaration is important when building HTML pages for display on
