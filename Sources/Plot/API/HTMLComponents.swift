@@ -43,6 +43,19 @@ public extension Node where Context == HTML.HeadContext {
         .meta(.property("og:site_name"), .content(name))
     }
 
+    /// Declare the Open Graph object type of this HTML page, such as
+    /// `"website"` or `"article"`. See https://ogp.me/#types for details.
+    /// - parameter type: The Open Graph type to declare.
+    static func ogType(_ type: String) -> Node {
+        .meta(.property("og:type"), .content(type))
+    }
+
+    /// Declare the Open Graph locale of this HTML page, for example `"en_US"`.
+    /// - parameter locale: The locale to declare.
+    static func ogLocale(_ locale: String) -> Node {
+        .meta(.property("og:locale"), .content(locale))
+    }
+
     /// Declare the HTML page's title, both for browsers and for social sharing.
     /// - parameter title: The title to declare.
     static func title(_ title: String) -> Node {
