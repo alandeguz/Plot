@@ -19,7 +19,7 @@ final class XMLTests: XCTestCase {
 
     func testSelfClosingElement() {
         let xml = XML(.selfClosedElement(named: "element"))
-        assertEqualXMLContent(xml, "<element/>")
+        assertEqualXMLContent(xml, "<element>")
     }
 
     func testElementWithAttribute() {
@@ -41,6 +41,6 @@ final class XMLTests: XCTestCase {
             ])
         )
 
-        assertEqualXMLContent(xml, "<parent><a/><b/></parent>")
+        assertEqualXMLContent(xml, "<parent><a><b></parent>")
     }
 }

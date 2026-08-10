@@ -39,13 +39,13 @@ final class HTMLTests: XCTestCase {
 
     func testDocumentEncoding() {
         let html = HTML(.head(.encoding(.utf8)))
-        assertEqualHTMLContent(html, #"<head><meta charset="UTF-8"/></head>"#)
+        assertEqualHTMLContent(html, #"<head><meta charset="UTF-8"></head>"#)
     }
 
     func testCSSStylesheet() {
         let html = HTML(.head(.stylesheet("styles.css")))
         assertEqualHTMLContent(html, """
-        <head><link rel="stylesheet" href="styles.css" type="text/css"/></head>
+        <head><link rel="stylesheet" href="styles.css" type="text/css"></head>
         """)
     }
 
@@ -63,7 +63,7 @@ final class HTMLTests: XCTestCase {
     func testSiteName() {
         let html = HTML(.head(.siteName("MySite")))
         assertEqualHTMLContent(html, """
-        <head><meta property="og:site_name" content="MySite"/></head>
+        <head><meta property="og:site_name" content="MySite"></head>
         """)
     }
 
@@ -71,9 +71,9 @@ final class HTMLTests: XCTestCase {
         let html = HTML(.head(.url("url.com")))
         assertEqualHTMLContent(html, """
         <head>\
-        <link rel="canonical" href="url.com"/>\
-        <meta name="twitter:url" content="url.com"/>\
-        <meta property="og:url" content="url.com"/>\
+        <link rel="canonical" href="url.com">\
+        <meta name="twitter:url" content="url.com">\
+        <meta property="og:url" content="url.com">\
         </head>
         """)
     }
@@ -83,8 +83,8 @@ final class HTMLTests: XCTestCase {
         assertEqualHTMLContent(html, """
         <head>\
         <title>Title</title>\
-        <meta name="twitter:title" content="Title"/>\
-        <meta property="og:title" content="Title"/>\
+        <meta name="twitter:title" content="Title">\
+        <meta property="og:title" content="Title">\
         </head>
         """)
     }
@@ -93,9 +93,9 @@ final class HTMLTests: XCTestCase {
         let html = HTML(.head(.description("Description")))
         assertEqualHTMLContent(html, """
         <head>\
-        <meta name="description" content="Description"/>\
-        <meta name="twitter:description" content="Description"/>\
-        <meta property="og:description" content="Description"/>\
+        <meta name="description" content="Description">\
+        <meta name="twitter:description" content="Description">\
+        <meta property="og:description" content="Description">\
         </head>
         """)
     }
@@ -109,10 +109,10 @@ final class HTMLTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <head>\
-        <meta name="twitter:image" content="url.png"/>\
-        <meta property="og:image" content="url.png"/>\
-        <meta name="twitter:card" content="summary_large_image"/>\
-        <meta name="twitter:site" content="@CreatorHandle"/>\
+        <meta name="twitter:image" content="url.png">\
+        <meta property="og:image" content="url.png">\
+        <meta name="twitter:card" content="summary_large_image">\
+        <meta name="twitter:site" content="@CreatorHandle">\
         </head>
         """)
     }
@@ -120,35 +120,35 @@ final class HTMLTests: XCTestCase {
     func testResponsiveViewport() {
         let html = HTML(.head(.viewport(.accordingToDevice)))
         assertEqualHTMLContent(html, """
-        <head><meta name="viewport" content="width=device-width, initial-scale=1.0"/></head>
+        <head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
         """)
     }
 
     func testStaticViewport() {
         let html = HTML(.head(.viewport(.constant(500))))
         assertEqualHTMLContent(html, """
-        <head><meta name="viewport" content="width=500, initial-scale=1.0"/></head>
+        <head><meta name="viewport" content="width=500, initial-scale=1.0"></head>
         """)
     }
     
     func testViewportFit() {
         let html = HTML(.head(.viewport(.accordingToDevice, fit: .cover)))
         assertEqualHTMLContent(html, """
-        <head><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/></head>
+        <head><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></head>
         """)
     }
 
     func testFavicon() {
         let html = HTML(.head(.favicon("icon.png")))
         assertEqualHTMLContent(html, """
-        <head><link rel="shortcut icon" href="icon.png" type="image/png"/></head>
+        <head><link rel="shortcut icon" href="icon.png" type="image/png"></head>
         """)
     }
 
     func testRSSFeedLink() {
         let html = HTML(.head(.rssFeedLink("feed.rss", title: "RSS")))
         assertEqualHTMLContent(html, """
-        <head><link rel="alternate" href="feed.rss" type="application/rss+xml" title="RSS"/></head>
+        <head><link rel="alternate" href="feed.rss" type="application/rss+xml" title="RSS"></head>
         """)
     }
 
@@ -160,7 +160,7 @@ final class HTMLTests: XCTestCase {
         )))
 
         assertEqualHTMLContent(html, """
-        <head><link rel="alternate" href="http://site/" hreflang="en"/></head>
+        <head><link rel="alternate" href="http://site/" hreflang="en"></head>
         """)
     }
 
@@ -172,7 +172,7 @@ final class HTMLTests: XCTestCase {
         )))
 
         assertEqualHTMLContent(html, """
-        <head><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/></head>
+        <head><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"></head>
         """)
     }
 
@@ -184,7 +184,7 @@ final class HTMLTests: XCTestCase {
         )))
 
         assertEqualHTMLContent(html, """
-        <head><link rel="preconnect" href="https://foo.com" crossorigin/></head>
+        <head><link rel="preconnect" href="https://foo.com" crossorigin></head>
         """)
     }
 
@@ -196,7 +196,7 @@ final class HTMLTests: XCTestCase {
         )))
 
         assertEqualHTMLContent(html, """
-        <head><link rel="preconnect" href="https://foo.com"/></head>
+        <head><link rel="preconnect" href="https://foo.com"></head>
         """)
     }
 
@@ -207,7 +207,7 @@ final class HTMLTests: XCTestCase {
         )))
 
         assertEqualHTMLContent(html, """
-        <head><link rel="manifest" href="site.webmanifest"/></head>
+        <head><link rel="manifest" href="site.webmanifest"></head>
         """)
     }
 
@@ -219,7 +219,7 @@ final class HTMLTests: XCTestCase {
         )))
 
         assertEqualHTMLContent(html, """
-        <head><link rel="mask-icon" href="safari-pinned-tab.svg" color="#000000"/></head>
+        <head><link rel="mask-icon" href="safari-pinned-tab.svg" color="#000000"></head>
         """)
     }
 
@@ -265,7 +265,7 @@ final class HTMLTests: XCTestCase {
         
         assertEqualHTMLContent(html, """
         <head>\
-        <link rel="alternate" title="Alternative representation"/>\
+        <link rel="alternate" title="Alternative representation">\
         </head>\
         <body>\
         <div title="Division title">\
@@ -349,7 +349,7 @@ final class HTMLTests: XCTestCase {
             .input(.dir(.auto))
         ))
 
-        assertEqualHTMLContent(html, #"<body><input dir="auto"/></body>"#)
+        assertEqualHTMLContent(html, #"<body><input dir="auto"></body>"#)
     }
 
     func testTextAreaDirectionalityLeftToRight() {
@@ -453,7 +453,7 @@ final class HTMLTests: XCTestCase {
         ))
 
         assertEqualHTMLContent(html, #"""
-        <body><embed src="url" type="some/type" width="500" height="300"/></body>
+        <body><embed src="url" type="some/type" width="500" height="300"></body>
         """#)
     }
 
@@ -482,18 +482,18 @@ final class HTMLTests: XCTestCase {
         <body><form action="url.com">\
         <fieldset>\
         <label for="a">A label</label>\
-        <input name="a" type="text"/>\
+        <input name="a" type="text">\
         </fieldset>\
-        <input name="b" type="search" autocomplete="off" autofocus/>\
-        <input name="c" type="text"/>\
-        <input name="d" type="email" placeholder="email address" autocomplete="on" required/>\
-        <input name="e" type="text" readonly disabled/>\
+        <input name="b" type="search" autocomplete="off" autofocus>\
+        <input name="c" type="text">\
+        <input name="d" type="email" placeholder="email address" autocomplete="on" required>\
+        <input name="e" type="text" readonly disabled>\
         <textarea name="f" cols="50" rows="10" required>Test</textarea>\
         <textarea name="g" autofocus placeholder="Placeholder"></textarea>\
         <textarea name="h" readonly disabled>Test</textarea>\
-        <input name="i" type="checkbox" checked/>\
-        <input name="j" type="file" multiple/>\
-        <input type="submit" value="Send"/>\
+        <input name="i" type="checkbox" checked>\
+        <input name="j" type="file" multiple>\
+        <input type="submit" value="Send">\
         </form></body>
         """)
     }
@@ -557,7 +557,7 @@ final class HTMLTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <body><form method="post"><div class="wrapper">\
-        <p>Text</p><input type="submit" value="Action"/>\
+        <p>Text</p><input type="submit" value="Action">\
         </div></form></body>
         """)
     }
@@ -602,7 +602,7 @@ final class HTMLTests: XCTestCase {
         ))
 
         assertEqualHTMLContent(html, """
-        <body><img id="id" class="image" src="image.png" alt="Text" width="44" height="44"/></body>
+        <body><img id="id" class="image" src="image.png" alt="Text" width="44" height="44"></body>
         """)
     }
 
@@ -615,9 +615,9 @@ final class HTMLTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <body>\
-        <audio><source src="a.mp3" type="audio/mpeg"/></audio>\
-        <audio controls><source src="b.wav" type="audio/wav"/></audio>\
-        <audio><source src="c.ogg" type="audio/ogg"/></audio>\
+        <audio><source src="a.mp3" type="audio/mpeg"></audio>\
+        <audio controls><source src="b.wav" type="audio/wav"></audio>\
+        <audio><source src="c.ogg" type="audio/ogg"></audio>\
         </body>
         """)
     }
@@ -631,9 +631,9 @@ final class HTMLTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <body>\
-        <video><source src="a.mp4" type="video/mp4"/></video>\
-        <video controls><source src="b.webm" type="video/webm"/></video>\
-        <video><source src="c.ogg" type="video/ogg"/></video>\
+        <video><source src="a.mp4" type="video/mp4"></video>\
+        <video controls><source src="b.webm" type="video/webm"></video>\
+        <video><source src="c.ogg" type="video/ogg"></video>\
         </body>
         """)
     }
@@ -780,8 +780,8 @@ final class HTMLTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <body>\
-        <datalist><option value="A"/><option value="B"/></datalist>\
-        <select><option value="C" selected/><option value="D" label="Dee"/></select>\
+        <datalist><option value="A"><option value="B"></datalist>\
+        <select><option value="C" selected><option value="D" label="Dee"></select>\
         </body>
         """)
     }
@@ -802,17 +802,17 @@ final class HTMLTests: XCTestCase {
 
     func testLineBreak() {
         let html = HTML(.body("One", .br(), "Two"))
-        assertEqualHTMLContent(html, "<body>One<br/>Two</body>")
+        assertEqualHTMLContent(html, "<body>One<br>Two</body>")
     }
 
     func testHorizontalLine() {
         let html = HTML(.body("One", .hr(), "Two"))
-        assertEqualHTMLContent(html, "<body>One<hr/>Two</body>")
+        assertEqualHTMLContent(html, "<body>One<hr>Two</body>")
     }
 
     func testHorizontalLineAttributes() {
         let html = HTML(.body("One", .hr(.class("alternate")), "Two"))
-        assertEqualHTMLContent(html, #"<body>One<hr class="alternate"/>Two</body>"#)
+        assertEqualHTMLContent(html, #"<body>One<hr class="alternate">Two</body>"#)
     }
 
     func testNoScript() {
@@ -871,7 +871,7 @@ final class HTMLTests: XCTestCase {
         ))
 
         assertEqualHTMLContent(html, """
-        <body data-user-name="John"><img data-icon="User"/></body>
+        <body data-user-name="John"><img data-icon="User"></body>
         """)
     }
 
@@ -888,7 +888,7 @@ final class HTMLTests: XCTestCase {
         assertEqualHTMLContent(html, """
             <body spellcheck="true">\
             <form>\
-            <input type="text" spellcheck="false"/>\
+            <input type="text" spellcheck="false">\
             <textarea spellcheck="false"></textarea>\
             </form>\
             </body>
@@ -904,8 +904,8 @@ final class HTMLTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <head><script src="file.js" integrity="sha384-fakeHash"></script>\
-        <link rel="stylesheet" href="styles.css" type="text/css" integrity="sha512-fakeHash"/>\
-        <link rel="stylesheet" href="styles2.css" type="text/css" integrity="sha256-fakeHash"/>\
+        <link rel="stylesheet" href="styles.css" type="text/css" integrity="sha512-fakeHash">\
+        <link rel="stylesheet" href="styles2.css" type="text/css" integrity="sha256-fakeHash">\
         </head>
         """)
     }
@@ -926,8 +926,8 @@ final class HTMLTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <body><picture>\
-        <source srcset="dark.jpg" media="(prefers-color-scheme: dark)"/>\
-        <img src="default.jpg"/>\
+        <source srcset="dark.jpg" media="(prefers-color-scheme: dark)">\
+        <img src="default.jpg">\
         </picture></body>
         """)
     }

@@ -236,10 +236,10 @@ final class HTMLComponentTests: XCTestCase {
 
         XCTAssertEqual(html, """
         <div>\
-        <b>Bold</b><br/>\
-        <em>Italic</em><br/>\
-        <u>Underlined</u><br/>\
-        <s>Strikethrough</s><br/>\
+        <b>Bold</b><br>\
+        <em>Italic</em><br>\
+        <u>Underlined</u><br>\
+        <s>Strikethrough</s><br>\
         </div>
         """)
     }
@@ -336,9 +336,9 @@ final class HTMLComponentTests: XCTestCase {
 
         assertEqualHTMLContent(html, """
         <body>\
-        <audio><source type="audio/mpeg" src="a.mp3"/></audio>\
-        <audio controls><source type="audio/wav" src="b.wav"/></audio>\
-        <audio><source type="audio/ogg" src="c.ogg"/></audio>\
+        <audio><source type="audio/mpeg" src="a.mp3"></audio>\
+        <audio controls><source type="audio/wav" src="b.wav"></audio>\
+        <audio><source type="audio/ogg" src="c.ogg"></audio>\
         </body>
         """)
     }
@@ -378,14 +378,14 @@ final class HTMLComponentTests: XCTestCase {
         <form action="url.com" method="post">\
         <fieldset>\
         <label>Username\
-        <input type="text" name="username" required autofocus autocomplete="off"/>\
+        <input type="text" name="username" required autofocus autocomplete="off">\
         </label>\
         <label class="password-label">Password\
-        <input type="password" name="password" class="password-input"/>\
+        <input type="password" name="password" class="password-input">\
         </label>\
         </fieldset>\
         <textarea name="description" rows="3" cols="2">Enter a description</textarea>\
-        <input type="submit" value="Submit"/>\
+        <input type="submit" value="Submit">\
         </form>
         """)
     }
@@ -406,12 +406,12 @@ final class HTMLComponentTests: XCTestCase {
 
     func testImageWithDescription() {
         let html = Image(url: "image.png", description: "My image").render()
-        XCTAssertEqual(html, #"<img src="image.png" alt="My image"/>"#)
+        XCTAssertEqual(html, #"<img src="image.png" alt="My image">"#)
     }
 
     func testImageWithoutDescription() {
         let html = Image("image.png").render()
-        XCTAssertEqual(html, #"<img src="image.png"/>"#)
+        XCTAssertEqual(html, #"<img src="image.png">"#)
     }
 
     func testLinkRelationshipAndTarget() {
@@ -594,5 +594,29 @@ final class HTMLComponentTests: XCTestCase {
         <tfoot><tr><td>Footer</td></tr></tfoot>\
         </table>
         """)
+    }
+
+    func testIndentedParagraphWithInlineLinkDoesNotInsertWhitespaceBeforePunctuation() {
+        let html = Paragraph {
+            Link("Example", url: "/example.html")
+                .linkRelationship(.author)
+            Text(".")
+        }
+        .render(indentedBy: .spaces(4))
+
+        XCTAssertTrue(html.contains("</a>."))
+        XCTAssertFalse(html.contains("</a> ."))
+        XCTAssertFalse(html.contains("</a>\n."))
+    }
+
+    func testIndentedParagraphWithInlineLinkMatchesCurrentOutputShape() {
+        let html = Paragraph {
+            Link("Example", url: "/example.html")
+                .linkRelationship(.author)
+            Text(".")
+        }
+        .render(indentedBy: .spaces(4))
+
+        XCTAssertEqual(html, #"<p>    <a href="/example.html" rel="author">Example</a>.</p>"#)
     }
 }

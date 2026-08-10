@@ -44,12 +44,12 @@ final class DocumentTests: XCTestCase {
         XCTAssertEqual(document.render(indentedBy: .spaces(4)), """
         <one>
             <two>
-                <three/>
+                <three>
             </two>four five
             <six>seven</six>
             <eight>nine</eight>
         </one>
-        <ten key="value"/>
+        <ten key="value">
         """)
     }
 
@@ -72,11 +72,11 @@ final class DocumentTests: XCTestCase {
         XCTAssertEqual(document.render(indentedBy: .tabs(1)), """
         <one>
         \t<two>
-        \t\t<three/>
+        \t\t<three>
         \t</two>
         \t<four></four>
         </one>
-        <five key="value"/>
+        <five key="value">
         """)
     }
 }

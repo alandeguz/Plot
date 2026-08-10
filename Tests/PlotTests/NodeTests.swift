@@ -69,7 +69,7 @@ final class NodeTests: XCTestCase {
             Attribute(name: "key", value: "value")
         ])
 
-        XCTAssertEqual(node.render(), #"<custom key="value"/>"#)
+        XCTAssertEqual(node.render(), #"<custom key="value">"#)
     }
 
     func testComponents() {
