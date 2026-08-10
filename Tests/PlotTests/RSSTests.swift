@@ -44,7 +44,7 @@ final class RSSTests: XCTestCase {
     func testFeedAtomLink() {
         let feed = RSS(.atomLink("url.com"))
         assertEqualRSSFeedContent(feed, """
-        <atom:link href="url.com" rel="self" type="application/rss+xml"/>
+        <atom:link href="url.com" rel="self" type="application/rss+xml">
         """)
     }
 

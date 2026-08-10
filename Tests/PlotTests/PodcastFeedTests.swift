@@ -46,7 +46,7 @@ final class PodcastFeedTests: XCTestCase {
     func testPodcastAtomLink() {
         let feed = PodcastFeed(.atomLink("url.com"))
         assertEqualPodcastFeedContent(feed, """
-        <atom:link href="url.com" rel="self" type="application/rss+xml"/>
+        <atom:link href="url.com" rel="self" type="application/rss+xml">
         """)
     }
 
@@ -87,13 +87,13 @@ final class PodcastFeedTests: XCTestCase {
 
     func testPodcastCategory() {
         let feed = PodcastFeed(.category("News"))
-        assertEqualPodcastFeedContent(feed, #"<itunes:category text="News"/>"#)
+        assertEqualPodcastFeedContent(feed, #"<itunes:category text="News">"#)
     }
 
     func testPodcastSubcategory() {
         let feed = PodcastFeed(.category("News", .category("Tech News")))
         assertEqualPodcastFeedContent(feed, """
-        <itunes:category text="News"><itunes:category text="Tech News"/></itunes:category>
+        <itunes:category text="News"><itunes:category text="Tech News"></itunes:category>
         """)
     }
 
@@ -107,7 +107,7 @@ final class PodcastFeedTests: XCTestCase {
 
     func testPodcastImage() {
         let feed = PodcastFeed(.image("image.png"))
-        assertEqualPodcastFeedContent(feed, #"<itunes:image href="image.png"/>"#)
+        assertEqualPodcastFeedContent(feed, #"<itunes:image href="image.png">"#)
     }
 
     func testPodcastPublicationDate() throws {
@@ -217,7 +217,7 @@ final class PodcastFeedTests: XCTestCase {
 
         let expectedComponents = [
             "<item>",
-            #"<enclosure url="episode.mp3" length="69121733" type="audio/mpeg"/>"#,
+            #"<enclosure url="episode.mp3" length="69121733" type="audio/mpeg">"#,
             #"<media:content url="episode.mp3" length="69121733" type="audio/mpeg" isDefault="true" medium="audio">"#,
             #"<media:title type="plain">Episode</media:title>"#,
             "</media:content>",
