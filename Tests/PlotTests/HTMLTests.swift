@@ -1,6 +1,8 @@
 /**
 *  Plot
 *  Copyright (c) John Sundell 2019
+*  Copyright (c) Alan DeGuzman 2026
+*  Copyright(c) Vithanco 2025
 *  MIT license, see LICENSE file for details
 */
 
@@ -121,7 +123,7 @@ final class HTMLTests: XCTestCase {
         let html = HTML(.head(.themeColor("#ffffff")))
         assertEqualHTMLContent(html, """
         <head>\
-        <meta name="theme-color" content="#ffffff"/>\
+        <meta name="theme-color" content="#ffffff">\
         </head>
         """)
     }
