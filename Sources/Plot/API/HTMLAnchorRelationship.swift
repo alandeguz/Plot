@@ -1,5 +1,6 @@
 /**
 *  Plot
+*  Copyright (c) Alan DeGuzman 2026
 *  Copyright (c) John Sundell 2019
 *  MIT license, see LICENSE file for details
 */
@@ -9,7 +10,7 @@ import Foundation
 /// An enum that defines various values for an HTML anchor's `rel`
 /// attribute, which specifies the relationship that the anchor has
 /// to the URL that it's linking to.
-public struct HTMLAnchorRelationship: RawRepresentable, Identifiable, ExpressibleByStringLiteral {
+public struct HTMLAnchorRelationship: RawRepresentable, Identifiable, ExpressibleByStringLiteral, Sendable {
     public var id: String { rawValue }
     public var rawValue: String
     

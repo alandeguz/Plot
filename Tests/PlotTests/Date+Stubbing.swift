@@ -1,10 +1,12 @@
 /**
 *  Plot
+*  Copyright (c) Alan DeGuzman 2026
 *  Copyright (c) John Sundell 2019
 *  MIT license, see LICENSE file for details
 */
 
-import XCTest
+import Foundation
+import Testing
 
 extension Date {
     enum FormattingStyle {
@@ -15,7 +17,7 @@ extension Date {
     typealias Stubs = (date: Date, timeZone: TimeZone, expectedString: String)
 
     static func makeStubs(withFormattingStyle formattingStyle: FormattingStyle) throws -> Stubs {
-        let timeZone = try require(TimeZone(secondsFromGMT: 60 * 60))
+        let timeZone = try #require(TimeZone(secondsFromGMT: 60 * 60))
 
         var dateComponents = DateComponents()
         dateComponents.calendar = Calendar(identifier: .gregorian)
@@ -27,7 +29,7 @@ extension Date {
         dateComponents.minute = 15
         dateComponents.second = 5
 
-        let date = try require(dateComponents.date)
+        let date = try #require(dateComponents.date)
 
         return (
             date,

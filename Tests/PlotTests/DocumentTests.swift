@@ -1,23 +1,23 @@
 /**
 *  Plot
+*  Copyright (c) Alan DeGuzman 2026
 *  Copyright (c) John Sundell 2019
 *  MIT license, see LICENSE file for details
 */
-
-import XCTest
+import Testing
 import Plot
-
-final class DocumentTests: XCTestCase {
+struct DocumentTests {
+    @Test
     func testEmptyDocument() {
         let document = Document<FormatStub>.custom()
-        XCTAssertEqual(document.render(), "")
+        #expect(document.render() == "")
     }
-
+    @Test
     func testEmptyIndentedDocument() {
         let document = Document<FormatStub>.custom()
-        XCTAssertEqual(document.render(indentedBy: .spaces(4)), "")
+        #expect(document.render(indentedBy: .spaces(4)) == "")
     }
-
+    @Test
     func testIndentationWithSpaces() {
         let document = Document.custom(
             withFormat: FormatStub.self,
@@ -40,8 +40,7 @@ final class DocumentTests: XCTestCase {
                 ])
             ]
         )
-
-        XCTAssertEqual(document.render(indentedBy: .spaces(4)), """
+        #expect(document.render(indentedBy: .spaces(4)) == """
         <one>
             <two>
                 <three>
@@ -52,7 +51,7 @@ final class DocumentTests: XCTestCase {
         <ten key="value">
         """)
     }
-
+    @Test
     func testIndentationWithTabs() {
         let document = Document.custom(
             withFormat: FormatStub.self,
@@ -68,8 +67,7 @@ final class DocumentTests: XCTestCase {
                 ])
             ]
         )
-
-        XCTAssertEqual(document.render(indentedBy: .tabs(1)), """
+        #expect(document.render(indentedBy: .tabs(1)) == """
         <one>
         \t<two>
         \t\t<three>
@@ -80,7 +78,6 @@ final class DocumentTests: XCTestCase {
         """)
     }
 }
-
 private extension DocumentTests {
     struct FormatStub: DocumentFormat {
         enum RootContext {}

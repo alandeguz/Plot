@@ -1,6 +1,7 @@
 /**
 *  Plot
 *  Copyright (c) John Sundell 2021
+*  Copyright (c) Alan DeGuzman 2026
 *  MIT license, see LICENSE file for details
 */
 
@@ -46,7 +47,9 @@ public extension HTMLListStyle {
     /// The default `ItemWrapper` closure that's used for all built-in `ListStyle`
     /// variants, and also acts as the default when creating custom ones. Wraps each
     /// item into an `<li>` element, if needed.
-    static let defaultItemWrapper: ItemWrapper = { $0.wrappedInElement(named: "li") }
+    static var defaultItemWrapper: ItemWrapper {
+        { $0.wrappedInElement(named: "li") }
+    }
     /// List style that renders each `List` as unordered, using the `<ul>` element.
     static var unordered: Self { HTMLListStyle(elementName: "ul") }
     /// List style that renders each `List` as ordered, using the `<ol>` element.

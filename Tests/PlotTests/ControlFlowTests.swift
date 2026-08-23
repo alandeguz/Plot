@@ -1,42 +1,34 @@
 /**
 *  Plot
+*  Copyright (c) Alan DeGuzman 2026
 *  Copyright (c) John Sundell 2019
 *  MIT license, see LICENSE file for details
 */
-
-import XCTest
+import Testing
 import Plot
-
-final class ControlFlowTests: XCTestCase {
+struct ControlFlowTests {
+    @Test
     func testIfCondition() {
-        XCTAssertEqual(Node<Any>.if(true, .text("True")).render(), "True")
-        XCTAssertEqual(Node<Any>.if(false, .text("True")).render(), "")
+        #expect(Node<Any>.if(true, .text("True")).render() == "True")
+        #expect(Node<Any>.if(false, .text("True")).render() == "")
     }
-
+    @Test
     func testIfElseCondition() {
-        XCTAssertEqual(
-            Node<Any>.if(true, .text("If"), else: .text("Else")).render(),
-            "If"
-        )
-
-        XCTAssertEqual(
-            Node<Any>.if(false, .text("If"), else: .text("Else")).render(),
-            "Else"
-        )
+        #expect(Node<Any>.if(true, .text("If"), else: .text("Else")).render() == "If")
+        #expect(Node<Any>.if(false, .text("If"), else: .text("Else")).render() == "Else")
     }
-
+    @Test
     func testUnwrappingOptional() {
         var optional: String? = "Hello"
-        XCTAssertEqual(Node<Any>.unwrap(optional, Node.text).render(), "Hello")
-
+        #expect(Node<Any>.unwrap(optional, Node.text).render() == "Hello")
         optional = nil
-        XCTAssertEqual(Node<Any>.unwrap(optional, Node.text).render(), "")
-        XCTAssertEqual(Node<Any>.unwrap(optional, Node.text, else: .text("Is nil") ).render(), "Is nil")
+        #expect(Node<Any>.unwrap(optional, Node.text).render() == "")
+        #expect(Node<Any>.unwrap(optional, Node.text, else: .text("Is nil") ).render() == "Is nil")
     }
-
+    @Test
     func testForEach() {
         let array = ["A", "B", "C"]
-        XCTAssertEqual(Node<Any>.forEach(array, Node.text).render(), "ABC")
-        XCTAssertEqual(Node<Any>.forEach([], Node.text).render(), "")
+        #expect(Node<Any>.forEach(array, Node.text).render() == "ABC")
+        #expect(Node<Any>.forEach([], Node.text).render() == "")
     }
 }

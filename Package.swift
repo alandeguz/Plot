@@ -1,7 +1,8 @@
-// swift-tools-version:5.4
+// swift-tools-version:6.2
 
 /**
 *  Plot
+*  Copyright (c) Alan DeGuzman 2026
 *  Copyright (c) John Sundell 2019
 *  MIT license, see LICENSE file for details
 */

@@ -1,19 +1,21 @@
 /**
 *  Plot
+*  Copyright (c) Alan DeGuzman 2026
 *  Copyright (c) John Sundell 2019
 *  MIT license, see LICENSE file for details
 */
 
-import XCTest
+import Foundation
+import Testing
 import Plot
 
-final class SiteMapTests: XCTestCase {
-    func testEmptyMap() {
+struct SiteMapTests {
+    @Test func emptyMap() {
         let map = SiteMap()
         assertEqualSiteMapContent(map, "")
     }
 
-    func testDailyUpdatedLocation() throws {
+    @Test func dailyUpdatedLocation() throws {
         let dateStubs = try Date.makeStubs(withFormattingStyle: .siteMap)
 
         let map = SiteMap(.url(
@@ -33,7 +35,7 @@ final class SiteMapTests: XCTestCase {
         """)
     }
 
-    func testMonthlyUpdatedLocation() throws {
+    @Test func monthlyUpdatedLocation() throws {
         let dateStubs = try Date.makeStubs(withFormattingStyle: .siteMap)
 
         let map = SiteMap(.url(

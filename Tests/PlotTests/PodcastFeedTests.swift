@@ -1,76 +1,78 @@
 /**
 *  Plot
+*  Copyright (c) Alan DeGuzman 2026
 *  Copyright (c) John Sundell 2019
 *  MIT license, see LICENSE file for details
 */
 
-import XCTest
+import Foundation
+import Testing
 import Plot
 
-final class PodcastFeedTests: XCTestCase {
-    func testEmptyFeed() {
+struct PodcastFeedTests {
+    @Test func emptyFeed() {
         let feed = PodcastFeed()
         assertEqualPodcastFeedContent(feed, "")
     }
 
-    func testNewFeedURL() {
+    @Test func newFeedURL() {
         let feed = PodcastFeed(.newFeedURL("url.com"))
         assertEqualPodcastFeedContent(feed, "<itunes:new-feed-url>url.com</itunes:new-feed-url>")
     }
 
-    func testPodcastTitle() {
+    @Test func podcastTitle() {
         let feed = PodcastFeed(.title("MyPodcast"))
         assertEqualPodcastFeedContent(feed, "<title>MyPodcast</title>")
     }
 
-    func testPodcastSubtitle() {
+    @Test func podcastSubtitle() {
         let feed = PodcastFeed(.subtitle("Subtitle"))
         assertEqualPodcastFeedContent(feed, "<itunes:subtitle>Subtitle</itunes:subtitle>")
     }
 
-    func testPodcastDescription() {
+    @Test func podcastDescription() {
         let feed = PodcastFeed(.description("Description"))
         assertEqualPodcastFeedContent(feed, "<description>Description</description>")
     }
 
-    func testPodcastSummary() {
+    @Test func podcastSummary() {
         let feed = PodcastFeed(.summary("Summary"))
         assertEqualPodcastFeedContent(feed, "<itunes:summary>Summary</itunes:summary>")
     }
 
-    func testPodcastURL() {
+    @Test func podcastURL() {
         let feed = PodcastFeed(.link("url.com"))
         assertEqualPodcastFeedContent(feed, "<link>url.com</link>")
     }
 
-    func testPodcastAtomLink() {
+    @Test func podcastAtomLink() {
         let feed = PodcastFeed(.atomLink("url.com"))
         assertEqualPodcastFeedContent(feed, """
         <atom:link href="url.com" rel="self" type="application/rss+xml">
         """)
     }
 
-    func testPodcastLanguage() {
+    @Test func podcastLanguage() {
         let feed = PodcastFeed(.language(.usEnglish))
         assertEqualPodcastFeedContent(feed, "<language>en-us</language>")
     }
 
-    func testPodcastTTL() {
+    @Test func podcastTTL() {
         let feed = PodcastFeed(.ttl(200))
         assertEqualPodcastFeedContent(feed, "<ttl>200</ttl>")
     }
 
-    func testPodcastCopyright() {
+    @Test func podcastCopyright() {
         let feed = PodcastFeed(.copyright("Copyright"))
         assertEqualPodcastFeedContent(feed, "<copyright>Copyright</copyright>")
     }
 
-    func testPodcastAuthor() {
+    @Test func podcastAuthor() {
         let feed = PodcastFeed(.author("Author"))
         assertEqualPodcastFeedContent(feed, "<itunes:author>Author</itunes:author>")
     }
 
-    func testPodcastExplicitFlag() {
+    @Test func podcastExplicitFlag() {
         let explicitFeed = PodcastFeed(.explicit(true))
         assertEqualPodcastFeedContent(explicitFeed, "<itunes:explicit>yes</itunes:explicit>")
 
@@ -78,26 +80,26 @@ final class PodcastFeedTests: XCTestCase {
         assertEqualPodcastFeedContent(nonExplicitFeed, "<itunes:explicit>no</itunes:explicit>")
     }
 
-    func testPodcastOwner() {
+    @Test func podcastOwner() {
         let feed = PodcastFeed(.owner(.name("Name"), .email("Email")))
         assertEqualPodcastFeedContent(feed, """
         <itunes:owner><itunes:name>Name</itunes:name><itunes:email>Email</itunes:email></itunes:owner>
         """)
     }
 
-    func testPodcastCategory() {
+    @Test func podcastCategory() {
         let feed = PodcastFeed(.category("News"))
         assertEqualPodcastFeedContent(feed, #"<itunes:category text="News">"#)
     }
 
-    func testPodcastSubcategory() {
+    @Test func podcastSubcategory() {
         let feed = PodcastFeed(.category("News", .category("Tech News")))
         assertEqualPodcastFeedContent(feed, """
         <itunes:category text="News"><itunes:category text="Tech News"></itunes:category>
         """)
     }
 
-    func testPodcastType() {
+    @Test func podcastType() {
         let episodicFeed = PodcastFeed(.type(.episodic))
         assertEqualPodcastFeedContent(episodicFeed, "<itunes:type>episodic</itunes:type>")
 
@@ -105,24 +107,24 @@ final class PodcastFeedTests: XCTestCase {
         assertEqualPodcastFeedContent(serialFeed, "<itunes:type>serial</itunes:type>")
     }
 
-    func testPodcastImage() {
+    @Test func podcastImage() {
         let feed = PodcastFeed(.image("image.png"))
         assertEqualPodcastFeedContent(feed, #"<itunes:image href="image.png">"#)
     }
 
-    func testPodcastPublicationDate() throws {
+    @Test func podcastPublicationDate() throws {
         let stubs = try Date.makeStubs(withFormattingStyle: .rss)
         let feed = PodcastFeed(.pubDate(stubs.date, timeZone: stubs.timeZone))
         assertEqualPodcastFeedContent(feed, "<pubDate>\(stubs.expectedString)</pubDate>")
     }
 
-    func testPodcastLastBuildDate() throws {
+    @Test func podcastLastBuildDate() throws {
         let stubs = try Date.makeStubs(withFormattingStyle: .rss)
         let feed = PodcastFeed(.lastBuildDate(stubs.date, timeZone: stubs.timeZone))
         assertEqualPodcastFeedContent(feed, "<lastBuildDate>\(stubs.expectedString)</lastBuildDate>")
     }
 
-    func testEpisodeGUID() {
+    @Test func episodeGUID() {
         let guidFeed = PodcastFeed(.item(.guid("123")))
         assertEqualPodcastFeedContent(guidFeed, "<item><guid>123</guid></item>")
 
@@ -137,26 +139,26 @@ final class PodcastFeedTests: XCTestCase {
         """)
     }
 
-    func testEpisodeTitle() {
+    @Test func episodeTitle() {
         let feed = PodcastFeed(.item(.title("Title")))
         assertEqualPodcastFeedContent(feed, """
         <item><title>Title</title><itunes:title>Title</itunes:title></item>
         """)
     }
 
-    func testEpisodeDescription() {
+    @Test func episodeDescription() {
         let feed = PodcastFeed(.item(.description("Description")))
         assertEqualPodcastFeedContent(feed, """
         <item><description>Description</description></item>
         """)
     }
 
-    func testEpisodeURL() {
+    @Test func episodeURL() {
         let feed = PodcastFeed(.item(.link("url.com")))
         assertEqualPodcastFeedContent(feed, "<item><link>url.com</link></item>")
     }
 
-    func testEpisodePublicationDate() throws {
+    @Test func episodePublicationDate() throws {
         let stubs = try Date.makeStubs(withFormattingStyle: .rss)
         let feed = PodcastFeed(.item(.pubDate(stubs.date, timeZone: stubs.timeZone)))
         assertEqualPodcastFeedContent(feed, """
@@ -164,7 +166,7 @@ final class PodcastFeedTests: XCTestCase {
         """)
     }
 
-    func testEpisodeDuration() {
+    @Test func episodeDuration() {
         let feed = PodcastFeed(.item(
             .duration("00:15:12"),
             .duration(hours: 0, minutes: 15, seconds: 12),
@@ -180,21 +182,21 @@ final class PodcastFeedTests: XCTestCase {
         """)
     }
 
-    func testSeasonNumber() {
+    @Test func seasonNumber() {
         let feed = PodcastFeed(.item(.seasonNumber(3)))
         assertEqualPodcastFeedContent(feed, """
         <item><itunes:season>3</itunes:season></item>
         """)
     }
 
-    func testEpisodeNumber() {
+    @Test func episodeNumber() {
         let feed = PodcastFeed(.item(.episodeNumber(42)))
         assertEqualPodcastFeedContent(feed, """
         <item><itunes:episode>42</itunes:episode></item>
         """)
     }
 
-    func testEpisodeType() {
+    @Test func episodeType() {
         let feed = PodcastFeed(
             .item(.episodeType(.full)),
             .item(.episodeType(.trailer)),
@@ -208,7 +210,7 @@ final class PodcastFeedTests: XCTestCase {
         """)
     }
 
-    func testEpisodeAudio() {
+    @Test func episodeAudio() {
         let feed = PodcastFeed(.item(.audio(
             url: "episode.mp3",
             byteSize: 69121733,
@@ -227,7 +229,7 @@ final class PodcastFeedTests: XCTestCase {
         assertEqualPodcastFeedContent(feed, expectedComponents.joined())
     }
 
-    func testEpisodeHTMLContent() {
+    @Test func episodeHTMLContent() {
         let feed = PodcastFeed(.item(.content(
             "<p>Hello</p><p>World &amp; Everyone!</p>"
         )))
