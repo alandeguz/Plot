@@ -632,10 +632,26 @@ struct HTMLComponentTests {
     }
 
     @Test
-    func indentedparagraphwithinlinelinkdoesnotinsertwhitespacebeforepunctuation() {
+    func indentedparagraphwithinlinelinkinsertswhitespacebeforepunctuationbydefault() {
         let html = Paragraph {
             Link("Example", url: "/example.html")
                 .linkRelationship(.author)
+            Text(".")
+        }
+        .render(indentedBy: .spaces(4))
+
+        // Without opting in via `noTrailingNewline()`, Plot's default
+        // pretty-printing behavior inserts a newline between sibling
+        // nodes, which HTML parsers collapse into a visible space.
+        #expect(html.contains("</a>\n."))
+    }
+
+    @Test
+    func indentedparagraphwithinlinelinkdoesnotinsertwhitespacebeforepunctuationwhensuppressed() {
+        let html = Paragraph {
+            Link("Example", url: "/example.html")
+                .linkRelationship(.author)
+                .noTrailingNewline()
             Text(".")
         }
         .render(indentedBy: .spaces(4))
@@ -646,10 +662,11 @@ struct HTMLComponentTests {
     }
 
     @Test
-    func indentedparagraphwithinlinelinkmatchescurrentoutputshape() {
+    func indentedparagraphwithinlinelinkmatchescurrentoutputshapewhensuppressed() {
         let html = Paragraph {
             Link("Example", url: "/example.html")
                 .linkRelationship(.author)
+                .noTrailingNewline()
             Text(".")
         }
         .render(indentedBy: .spaces(4))

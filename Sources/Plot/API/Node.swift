@@ -176,7 +176,8 @@ internal extension Node where Context == Any {
         Node { renderer in
             renderer.renderComponent(component.base,
                 deferredAttributes: component.deferredAttributes + renderer.deferredAttributes,
-                environmentOverrides: component.environmentOverrides
+                environmentOverrides: component.environmentOverrides,
+                suppressesTrailingNewline: component.suppressesTrailingNewline
             )
         }
     }

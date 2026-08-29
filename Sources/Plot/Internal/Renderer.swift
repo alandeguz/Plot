@@ -13,6 +13,7 @@ internal struct Renderer {
     private var elementWrapper: ElementWrapper?
     private var elementBuffer: ElementRenderingBuffer?
     private var containsElement = false
+    private var suppressesFollowingNewline = false
 }
 
 extension Renderer {
@@ -94,7 +95,8 @@ extension Renderer {
         _ component: Component,
         deferredAttributes: [AnyAttribute] = [],
         environmentOverrides: [Environment.Override] = [],
-        elementWrapper: ElementWrapper? = nil
+        elementWrapper: ElementWrapper? = nil,
+        suppressesTrailingNewline: Bool = false
     ) {
         var environment = self.environment
         environmentOverrides.forEach { $0.apply(to: &environment) }
@@ -131,6 +133,11 @@ extension Renderer {
         )
 
         containsElement = renderer.containsElement
+
+        // Bubble up whether a trailing-newline suppression was requested,
+        // either directly on this component, or on whatever nested content
+        // it wraps (e.g. multiple stacked modifiers).
+        suppressesFollowingNewline = suppressesTrailingNewline || renderer.suppressesFollowingNewline
     }
 }
 
@@ -146,10 +153,13 @@ private extension Renderer {
             }
         }
 
+        let suppressLeadingNewline = suppressesFollowingNewline
+        suppressesFollowingNewline = false
+
         if let elementBuffer = elementBuffer {
-            elementBuffer.add(text, isPlainText: isPlainText)
+            elementBuffer.add(text, isPlainText: isPlainText, suppressLeadingNewline: suppressLeadingNewline)
         } else {
-            if indentation != nil && !result.isEmpty {
+            if indentation != nil && !result.isEmpty && !suppressLeadingNewline {
                 result.append("\n")
             }
 

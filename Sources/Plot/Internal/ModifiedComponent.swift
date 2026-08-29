@@ -8,5 +8,6 @@ internal struct ModifiedComponent: Component {
     var base: Component
     var deferredAttributes = [AnyAttribute]()
     var environmentOverrides = [Environment.Override]()
+    var suppressesTrailingNewline = false
     var body: Component { Node.modifiedComponent(self) }
 }

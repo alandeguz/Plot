@@ -102,6 +102,34 @@ public extension Component {
         )
     }
 
+    /// Prevent the pretty-printing newline that would otherwise be inserted
+    /// between this component's rendered content and whatever comes right
+    /// after it, when rendering with indentation enabled.
+    ///
+    /// Plot inserts newlines between sibling nodes/components to produce
+    /// nicely indented output. Those newlines are collapsed into a single
+    /// space by HTML parsers, which is usually invisible — but it becomes
+    /// a visible, unwanted space when plain text (such as punctuation)
+    /// immediately follows this component with no whitespace in between.
+    /// Apply this modifier to suppress that newline for those cases.
+    func noTrailingNewline() -> Component {
+        if let group = self as? ComponentGroup {
+            return ComponentGroup(members: group.members.map {
+                $0.noTrailingNewline()
+            })
+        }
+
+        if var modified = self as? ModifiedComponent {
+            modified.suppressesTrailingNewline = true
+            return modified
+        }
+
+        return ModifiedComponent(
+            base: self,
+            suppressesTrailingNewline: true
+        )
+    }
+
     /// Convert this component into a `Node`, with either an inferred or explicit
     /// context. Use this API when you want to embed a component into a `Node`-based
     /// hierarchy. Calling this method is equivalent to creating a `.component` node
