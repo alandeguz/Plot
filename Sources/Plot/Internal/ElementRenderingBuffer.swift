@@ -37,11 +37,7 @@ internal final class ElementRenderingBuffer {
 
     func add(_ text: String, isPlainText: Bool) {
         if !isPlainText, indentation != nil {
-            let previousEndsInWhitespace = body.last?.isWhitespace == true
-
-            if body.isEmpty || !previousEndsInWhitespace {
-                body.append("\n")
-            }
+            body.append("\n")
         }
 
         body.append(text)

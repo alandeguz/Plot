@@ -149,12 +149,8 @@ private extension Renderer {
         if let elementBuffer = elementBuffer {
             elementBuffer.add(text, isPlainText: isPlainText)
         } else {
-            if indentation != nil && !result.isEmpty && !isPlainText {
-                let previousEndsInWhitespace = result.last?.isWhitespace == true
-
-                if !previousEndsInWhitespace {
-                    result.append("\n")
-                }
+            if indentation != nil && !result.isEmpty {
+                result.append("\n")
             }
 
             result.append(text)
